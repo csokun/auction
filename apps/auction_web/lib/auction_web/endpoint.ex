@@ -1,6 +1,14 @@
 defmodule AuctionWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :auction_web
 
+  @session_options [
+    store: :cookie,
+    key: "_auction_web_key",
+    signing_salt: "8HemE9m/"
+  ]
+
+  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
+
   socket "/socket", AuctionWeb.UserSocket,
     websocket: true,
     longpoll: false
@@ -37,10 +45,6 @@ defmodule AuctionWeb.Endpoint do
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
-  plug Plug.Session,
-    store: :cookie,
-    key: "_auction_web_key",
-    signing_salt: "8HemE9m/"
-
+  plug Plug.Session, @session_options
   plug AuctionWeb.Router
 end

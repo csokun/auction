@@ -23,6 +23,7 @@ defmodule AuctionWeb do
       import Plug.Conn
       import AuctionWeb.Gettext
       alias AuctionWeb.Router.Helpers, as: Routes
+      import Phoenix.LiveView.Controller
     end
   end
 
@@ -40,6 +41,7 @@ defmodule AuctionWeb do
 
       import AuctionWeb.ErrorHelpers
       import AuctionWeb.Gettext
+      import Phoenix.LiveView.Helpers
       alias AuctionWeb.Router.Helpers, as: Routes
     end
   end
@@ -49,6 +51,7 @@ defmodule AuctionWeb do
       use Phoenix.Router
       import Plug.Conn
       import Phoenix.Controller
+      import Phoenix.LiveView.Router
     end
   end
 

@@ -4,9 +4,11 @@ defmodule AuctionWeb.Router do
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
+    plug :fetch_live_flash
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :put_root_layout, {AuctionWeb.LayoutView, :root}
   end
 
   pipeline :api do
@@ -17,6 +19,8 @@ defmodule AuctionWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/items", ItemsController
+    live "/foo", FooLive
   end
 
   # Other scopes may use custom stacks.
