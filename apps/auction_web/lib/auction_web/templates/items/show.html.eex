@@ -3,3 +3,8 @@
   <li><strong>Description:</strong> <%= @item.description %></li>
   <li><strong>Auction end:</strong> <%= @item.ends_at %></li>
 </ul>
+
+<div>
+  <%= link("All", to: Routes.items_path(@conn, :index)) %>&nbsp;
+  <%= link("Edit", to: Routes.items_path(@conn, :edit, @item)) %>&nbsp;
+</div>
