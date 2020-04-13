@@ -40,7 +40,7 @@ defmodule AuctionWeb.MixProject do
       {:phoenix, "~> 1.4.16"},
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_html, "~> 2.14"},
-      {:phoenix_ecto, "~> 4.0"},
+      {:phoenix_ecto, "~> 4.1"},
       {:phoenix_live_view, "~> 0.11.1"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.17"},
