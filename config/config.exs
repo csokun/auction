@@ -26,7 +26,7 @@ config :auction_web, AuctionWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "6JlTPMTVMPsT+dpFfonm+gKm4ZCfQ5iBn4f0VKlBVwhQepPtNvAs/Vo0p3JF4JsP",
   render_errors: [view: AuctionWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: AuctionWeb.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub_server: AuctionWeb.PubSub
 
 # Sample configuration:
 #
