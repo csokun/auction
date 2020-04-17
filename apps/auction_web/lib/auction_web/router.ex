@@ -1,5 +1,6 @@
 defmodule AuctionWeb.Router do
   use AuctionWeb, :router
+  import Phoenix.LiveDashboard.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -18,6 +19,7 @@ defmodule AuctionWeb.Router do
   scope "/", AuctionWeb do
     pipe_through :browser
 
+    live_dashboard "/dashboard", metrics: AuctionWeb.Telemetry
     get "/", PageController, :index
     resources "/items", ItemsController
     resources "/users", UserController, only: [:new, :show, :create]
