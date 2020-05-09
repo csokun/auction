@@ -37,7 +37,7 @@ defmodule AuctionWeb.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.0-rc.0", override: true},
+      {:phoenix, "~> 1.5.1", override: true},
       {:phoenix_pubsub, "~> 2.0"},
       {:phoenix_html, "~> 2.14"},
       {:phoenix_ecto, "~> 4.1"},
@@ -48,8 +48,9 @@ defmodule AuctionWeb.MixProject do
       {:telemetry_metrics, "~> 0.4"},
       {:gettext, "~> 0.17"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.1"},
-      {:auction, in_umbrella: true}
+      {:plug_cowboy, "~> 2.2.1"},
+      {:auction, in_umbrella: true},
+      {:number, "~> 1.0"}
     ]
   end
 

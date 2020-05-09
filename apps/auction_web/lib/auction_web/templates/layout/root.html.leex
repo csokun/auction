@@ -14,8 +14,8 @@
       <section class="container">
         <nav role="navigation">
           <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+            <li><%= link "Items", to: Routes.items_path(@conn, :index) %></li>
+           <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
               <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
             <% end %>
           </ul>
@@ -25,6 +25,14 @@
         </a>
       </section>
     </header>
+    <div class="container">
+      <%= if @current_user do %>
+        Logged in as <%= link @current_user.username, to: Routes.session_path(@conn, :show, user: @current_user) %>
+        | <%= link "Logout", to: Routes.session_path(@conn, :delete), method: :delete %>
+      <% else %>
+        <%= link "login", to: Routes.session_path(@conn, :new) %>
+      <% end %>
+    </div>
     <%= @inner_content %>
   </body>
 </html>

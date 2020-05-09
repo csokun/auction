@@ -9,6 +9,7 @@ defmodule Auction.User do
     # virtual: true - won't be persist
     field(:password, :string, virtual: true)
     field(:hashed_password, :string)
+    has_many(:bids, Acution.Bid)
     timestamps()
   end
 

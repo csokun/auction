@@ -8,7 +8,7 @@ defmodule Auction.Item do
     field(:title, :string)
     field(:description, :string)
     field(:ends_at, :utc_datetime)
-
+    has_many(:bids, Auction.Bid)
     # data will have inserted_at and updated_at
     timestamps()
   end

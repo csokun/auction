@@ -9,6 +9,7 @@ defmodule AuctionWeb.Router do
     # plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug AuctionWeb.Authenticator
     plug :put_root_layout, {AuctionWeb.LayoutView, :root}
   end
 
@@ -21,14 +22,21 @@ defmodule AuctionWeb.Router do
 
     live_dashboard "/dashboard", metrics: AuctionWeb.Telemetry
     get "/", PageController, :index
-    resources "/items", ItemsController
+
+    resources "/items", ItemsController do
+      resources "/bids", BidController, only: [:create]
+    end
+
     resources "/users", UserController, only: [:new, :show, :create]
 
     get "/login", SessionController, :new
     post "/login", SessionController, :create
     delete "/logout", SessionController, :delete
+    get "/session", SessionController, :show
 
     live "/foo", FooLive
+    live "/license", LicenseLive
+    live "/sales", SaleDashboardLive
   end
 
   # Other scopes may use custom stacks.

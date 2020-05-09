@@ -21,6 +21,13 @@ defmodule AuctionWeb.SessionController do
   end
 
   def delete(conn, _params) do
-    # TBI 
+    conn
+    |> clear_session()
+    |> configure_session(drop: true)
+    |> redirect(to: Routes.user_path(conn, :new))
+  end
+
+  def show(conn, %{"user" => user}) do
+    assign(conn, :user, user)
   end
 end
