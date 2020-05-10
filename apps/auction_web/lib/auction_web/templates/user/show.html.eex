@@ -8,4 +8,15 @@
   <dd><%= @user.email_address %></dd>
 </dl>
 
+<h2>Recent bids</h2>
+
+<%= for bid <- @bids do %>
+  <p>
+  <strong><%= formatted_datetime(bid.inserted_at) %></strong>
+  --
+  <%= integer_to_currency(bid.amount) %>
+  for
+  <em><%= link bid.item.title, to: Routes.items_path(@conn, :show, bid.item) %></em>
+  </p>
+<% end %>
 <%= link("Logout", to: Routes.session_path(@conn, :delete), method: :delete) %>

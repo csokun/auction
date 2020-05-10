@@ -50,7 +50,8 @@ defmodule AuctionWeb.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.2.1"},
       {:auction, in_umbrella: true},
-      {:number, "~> 1.0"}
+      {:number, "~> 1.0"},
+      {:timex, "~> 3.6.1"}
     ]
   end
 

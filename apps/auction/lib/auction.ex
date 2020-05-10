@@ -1,7 +1,20 @@
 defmodule Auction do
+  import Ecto.Query
   alias Auction.{Bid, Repo, Item, User, Password}
 
   @repo Repo
+
+  def get_bids_for_user(user) do
+    query =
+      from(b in Bid,
+        where: b.user_id == ^user.id,
+        order_by: [desc: :inserted_at],
+        preload: :item,
+        limit: 10
+      )
+
+    @repo.all(query)
+  end
 
   def list_items do
     @repo.all(Item)
@@ -63,9 +76,22 @@ defmodule Auction do
   def new_bid, do: Bid.changeset(%Bid{})
 
   def insert_bid(params) do
+    amount = get_current_highest_bid_amount(Map.get(params, :item_id))
+
     %Bid{}
-    |> Bid.changeset(params)
-    |> IO.inspect()
+    |> Bid.changeset_higher_bid(params, %{amount: amount})
     |> @repo.insert()
+  end
+
+  def get_current_highest_bid_amount(item_id) do
+    query =
+      from(b in Bid,
+        where: b.item_id == ^item_id,
+        group_by: b.item_id,
+        select: max(b.amount)
+      )
+
+    query
+    |> @repo.one()
   end
 end

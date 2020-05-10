@@ -16,4 +16,19 @@ defmodule Auction.Bid do
     |> assoc_constraint(:item)
     |> assoc_constraint(:user)
   end
+
+  def changeset_higher_bid(bid, params \\ %{}, opts \\ %{}) do
+    bid
+    |> changeset(params)
+    |> validate_change(:amount, &validate(&1, &2, opts))
+  end
+
+  defp validate(:amount, amount, opts \\ %{amount: 0}) do
+    higher_amount = Map.get(opts, :amount)
+
+    case higher_amount > amount do
+      true -> [amount: "Bid too low"]
+      false -> []
+    end
+  end
 end

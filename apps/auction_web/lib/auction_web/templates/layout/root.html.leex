@@ -27,7 +27,7 @@
     </header>
     <div class="container">
       <%= if @current_user do %>
-        Logged in as <%= link @current_user.username, to: Routes.session_path(@conn, :show, user: @current_user) %>
+        Logged in as <%= link @current_user.username, to: Routes.user_path(@conn, :show, @current_user) %>
         | <%= link "Logout", to: Routes.session_path(@conn, :delete), method: :delete %>
       <% else %>
         <%= link "login", to: Routes.session_path(@conn, :new) %>

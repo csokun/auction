@@ -43,6 +43,7 @@ defmodule AuctionWeb do
       import AuctionWeb.Gettext
       import Phoenix.LiveView.Helpers
       alias AuctionWeb.Router.Helpers, as: Routes
+      import AuctionWeb.GobalHelpers
     end
   end
 
