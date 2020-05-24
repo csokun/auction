@@ -55,9 +55,31 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("topic:subtopic", {})
-channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
+// let channel = socket.channel("topic:subtopic", {})
+// channel.join()
+//   .receive("ok", resp => { console.log("Joined successfully", resp) })
+//   .receive("error", resp => { console.log("Unable to join", resp) })
+let match = document.location.pathname.match(/\/items\/(\d+)$/);
+let channelTokenMeta = document.querySelector("meta[name='channel_token']");
+if (match && channelTokenMeta) {
+  let itemId = match[1];
+  let opts = { params: {token: channelTokenMeta.getAttribute("content") } };
+  let channel = socket.channel(`item:${itemId}`, opts);
+
+  channel.on('new_bid', data => {    
+    console.log('new_bid message received', data);
+    const el = document.getElementById('bids');
+    el.insertAdjacentHTML('afterbegin', data.body);
+  });
+
+  channel
+    .join()
+    .receive('ok', resp => {
+      console.log('Joined successfully', resp)
+    })
+    .receive('error', resp => {
+      console.log('Unable to join', resp)
+    });
+}
 
 export default socket

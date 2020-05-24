@@ -26,7 +26,7 @@ defmodule Auction.Bid do
   defp validate(:amount, amount, opts \\ %{amount: 0}) do
     higher_amount = Map.get(opts, :amount)
 
-    case higher_amount > amount do
+    case higher_amount >= amount do
       true -> [amount: "Bid too low"]
       false -> []
     end

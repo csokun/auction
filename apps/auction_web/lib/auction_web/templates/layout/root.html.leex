@@ -4,6 +4,11 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <%= if @current_user do %>
+    <%= tag :meta,
+            name: "channel_token",
+            content: Phoenix.Token.sign(@conn, "user auth", @current_user.id) %>
+    <% end %>
     <%= csrf_meta_tag() %>
     <%= live_title_tag assigns[:page_title] || "Test", suffix: " · Phoenix Framework" %>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>

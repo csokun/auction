@@ -3,6 +3,7 @@ defmodule AuctionWeb.UserSocket do
 
   ## Channels
   # channel "room:*", AuctionWeb.RoomChannel
+  channel "item:*", AuctionWeb.ItemChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -15,9 +16,14 @@ defmodule AuctionWeb.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  def connect(_params, socket, _connect_info) do
-    {:ok, socket}
+  def connect(%{"token" => token}, socket, _connect_info) do
+    case Phoenix.Token.verify(socket, "user auth", token, max_age: 86400) do
+      {:ok, user_id} ->
+        {:ok, assign(socket, :user_id, user_id)}
+        {:error, _} -> :error
+    end
   end
+  def connect(_params, socket, _connect_info), do: {:ok, socket}
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
   #
@@ -29,5 +35,11 @@ defmodule AuctionWeb.UserSocket do
   #     AuctionWeb.Endpoint.broadcast("user_socket:#{user.id}", "disconnect", %{})
   #
   # Returning `nil` makes this socket anonymous.
-  def id(_socket), do: nil
+  def id(socket) do
+    user_id = socket.assigns.user_id
+    case user_id > 0 do
+      true -> "user_socket:#{user_id}"
+      false -> nil
+    end
+  end
 end

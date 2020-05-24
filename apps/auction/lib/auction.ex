@@ -27,6 +27,7 @@ defmodule Auction do
   def get_item_with_bids(id) do
     id
     |> get_item()
+    |> @repo.preload(bids: from(b in Bid, order_by: [desc: b.inserted_at]))
     |> @repo.preload(bids: [:user])
   end
 
@@ -90,8 +91,9 @@ defmodule Auction do
         group_by: b.item_id,
         select: max(b.amount)
       )
-
-    query
-    |> @repo.one()
+    case @repo.one(query) do
+      nil -> 0
+      amount -> amount
+    end
   end
 end
